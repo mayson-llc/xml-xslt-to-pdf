@@ -117,4 +117,4 @@ When using `--engine=chrome`, the script writes a temporary HTML file then invok
 - Embed CSVs: parse and append tables to HTML prior to PDF rendering.
 
 ## License
-Internal utility script – adapt as needed.
+MIT
