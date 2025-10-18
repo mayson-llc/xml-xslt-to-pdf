@@ -16,6 +16,8 @@ graph LR
 ```
 
 ## 主な機能
+- **ZIP ファイル対応**: ZIPファイルを入力として受け付け、内部のXML/XSLファイルを処理してPDFを生成
+  - 日本語ファイル名の適切な処理（UTF-8/Shift-JISエンコーディングを自動検出）
 - `<?xml-stylesheet ...?>` 処理命令から XSLT を自動検出
 - 複数のXMLが同じスタイルシートを使用する場合、コンパイル済みXSLTをキャッシュして高速化
 - ページサイズの自動判定: 生成されたHTMLが非常に幅広い（多数の `<col>` または大きな `colspan`）場合は `A3 横向き` を選択、それ以外は `A4 縦向き` がデフォルト
@@ -50,15 +52,28 @@ pip install -r requirements.txt
 `--engine=chrome` を使用する場合は、Chrome/Chromium がインストールされていて、PATH で利用可能であることを確認してください。`--chrome-path` で明示的なバイナリパスを指定することもできます。
 
 ## 使用方法
+
+### 基本的な使い方
 XML/XSLファイルを含むディレクトリから:
 ```bash
 python convert_xmls.py
 ```
 これにより、カレントディレクトリをスキャンして、既存の `.xsl`/`.xslt` ファイルを指す `xml-stylesheet` 処理命令を持つすべての `*.xml` を変換します。
 
+### ZIP ファイルの処理
+XMLとXSLファイルを含むZIPファイルを直接処理できます:
+```bash
+python convert_xmls.py archive.zip
+```
+- ZIPファイル内のXMLとXSLファイルを自動的に検出
+- 一時ディレクトリに展開して処理
+- PDFはカレントディレクトリに出力（`--out-dir` で変更可能）
+
 ### よく使うオプション
 ```bash
 python convert_xmls.py             # デフォルト: weasyprint エンジン
+python convert_xmls.py archive.zip                          # ZIPファイルを処理
+python convert_xmls.py archive.zip --out-dir ./pdfs         # ZIPからPDFを指定ディレクトリに出力
 python convert_xmls.py --engine=chrome                      # ヘッドレス Chrome を使用
 python convert_xmls.py --engine=chrome --chrome-path "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 python convert_xmls.py some/file1.xml other/dir             # 明示的なパス指定

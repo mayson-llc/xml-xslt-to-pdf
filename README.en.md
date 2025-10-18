@@ -16,6 +16,8 @@ graph LR
 ```
 
 ## Features
+- **ZIP file support**: Accepts ZIP files as input, extracts and processes XML/XSL files, outputs PDFs to caller directory
+  - Proper handling of Japanese filenames (auto-detects UTF-8/Shift-JIS encoding)
 - Automatically discovers the XSLT from the `<?xml-stylesheet ...?>` processing instruction.
 - Caches compiled XSLT to speed up multiple XMLs using the same stylesheet.
 - Heuristic page sizing: if the generated HTML appears very wide (many `<col>` or large `colspan`), selects `A3 landscape`; otherwise defaults to `A4 portrait`.
@@ -50,15 +52,28 @@ pip install -r requirements.txt
 If using `--engine=chrome`, ensure Chrome/Chromium is installed and available in PATH. You can provide an explicit binary path with `--chrome-path`.
 
 ## Usage
+
+### Basic Usage
 From the directory containing the XML/XSL files:
 ```bash
 python convert_xmls.py
 ```
 This scans the current directory and converts every `*.xml` that has an `xml-stylesheet` PI pointing to an existing `.xsl`/`.xslt` file.
 
+### ZIP File Processing
+You can directly process ZIP files containing XML and XSL files:
+```bash
+python convert_xmls.py archive.zip
+```
+- Automatically detects XML and XSL files inside the ZIP
+- Extracts to temporary directory for processing
+- Outputs PDFs to current directory (or use `--out-dir` to specify)
+
 ### Common options
 ```bash
 python convert_xmls.py             # default: weasyprint engine
+python convert_xmls.py archive.zip                          # process ZIP file
+python convert_xmls.py archive.zip --out-dir ./pdfs         # output PDFs from ZIP to specified directory
 python convert_xmls.py --engine=chrome                      # use headless Chrome
 python convert_xmls.py --engine=chrome --chrome-path "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 python convert_xmls.py some/file1.xml other/dir             # explicit paths
