@@ -98,7 +98,7 @@ python convert_xmls.py --margin 8mm
 異なる結果が必要な場合は、`--force-page-size` / `--force-orientation` で上書きしてください。
 
 ## フォント
-挿入されるCSSは、`Yu Mincho`、`Hiragino Mincho ProN`、`Noto Serif CJK JP`、serif というフォントスタックを設定します。日本語文字を正しくレンダリングするために、少なくとも1つの日本語フォントがインストールされていることを確認してください。インストールされていない場合は、（例: Notoフォント）をインストールして再実行してください。
+挿入されるCSSは、`Yu Mincho`、`Hiragino Mincho ProN`、`Noto Serif CJK JP`、serif というフォントスタックを設定します。日本語文字を正しくレンダリングするために、少なくとも1つの日本語フォントがインストールされていることを確認してください。インストールされていない場合は、フォント（例: Notoフォント）をインストールして再実行してください。
 
 ## Chromeエンジンに関する注意事項
 `--engine=chrome` を使用すると、スクリプトは一時的なHTMLファイルを書き込み、`--headless --print-to-pdf` でChromeを呼び出します。余白とページサイズは挿入されたCSSで制御されますが、Chromeは独自のデフォルト値を強制することがあります。レイアウトの精度が重要な場合は、両方のエンジンをテストしてください。
@@ -117,4 +117,4 @@ python convert_xmls.py --margin 8mm
 - CSVの埋め込み: PDFレンダリング前にCSVを解析してHTMLにテーブルとして追加
 
 ## ライセンス
-内部ユーティリティスクリプト – 必要に応じて適応してください。
+MIT
